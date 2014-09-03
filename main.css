@@ -1,0 +1,25 @@
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+li {
+    display: inline;
+}
+
+#content
+{
+    position: absolute;
+    top: 110px;
+    left: 350px;
+    width: 775px;
+    height: 605px;
+}
+
+#content label
+{
+    display:inline;
+    float:left;
+    margin-right:4px;
+    vertical-align:top;
+}

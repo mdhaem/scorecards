@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>iScoreCardsAdmin</title>
+	<link rel="apple-touch-icon" href="iPhoneIcon_Small.png">
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.min.js"></script>
+	<link href="datepick.css" rel="stylesheet">
+	<script src="plugin.js"></script>
+	<script src="datepick.js"></script>
+	<script>
+	$(function() {
+		$('#popupDatepicker').datepick();
+		//$(selector).datepick({dateFormat: 'yyyy-mm-dd'});
+		$('#inlineDatepicker').datepick({onSelect: showDate, dateFormat: 'yyyy-mm-dd'});
+	});
+
+	function showDate(date) {
+		alert('The date chosen is ' + date);
+	}
+	</script>
+	
+    <style>
+        .blank_row
+        {
+            height: 20px !important; /* Overwrite any previous rules */
+            background-color: #FFFFFF;
+        }
+        .right
+        {
+            text-align:right;
+            padding-right: 2px;
+        }
+        .selects
+        {
+            margin-bottom: 20px;
+            margin-left: 60px;
+        }
+        
+        .picker
+        { 
+            height:16px;
+            width:16px;
+            background:url("/images/icons/cal.gif") no-repeat; 
+            margin-left:-19px;
+            cursor:pointer;
+            border:none;
+        } 
+
+    </style>
+</head>
+<body>
+    <h2>Admin: Add Scores</h2>
+    <form>
+        <div class="selects">
+	        <select id="selectcardgame">
+				<option value="0">Select game...</option>
+	        </select>
+	        <select id="selectplayergroup">
+				<option value="0">Select player group...</option>
+	        </select>
+        </div>
+        <div id="shanghaiscorecard">
+            <table>
+				<tr id=history>
+			        <td class="scorecardsidemenu">Games Won</td>
+			        <td id="historyone">0</td>
+			        <td id="historytwo">0</td>
+			        <td id="historythree">0</td>
+			        <td id="historyfour">0</td>
+				</tr>
+                <tr class="blank_row"></tr>
+                <tr>
+                    <td class="scorecardsidemenu">Date:</td>
+                    <td colspan="2"><input type="text" id="popupDatepicker"/></td>
+                    
+                    <td class="scorecardsidemenu" class="right">Game:</td>
+                    <td><input id="game" type="text" value="1" /></td>
+                </tr>
+			    <tr id="scorecardnamerow">
+			        <td class="scorecardsidemenu"></td>
+			        <!--<td id="0-1" class="playername" value="1">Bill</td>
+			        <td id="0-2" class="playername" value="2">Bev</td>
+			        <td id="0-3" class="playername" value="3">Mike</td>
+			        <td id="0-4" class="playername" value="4">Sandy</td>-->
+			    </tr>
+                <tr>
+                    <td class="scorecardsidemenu">Score:</td>
+			        <td><input id="scoretotalone" type="number" value="0" /></td>
+			        <td><input id="scoretotaltwo" type="number" value="0" /></td>
+			        <td><input id="scoretotalthree" type="number" value="0" /></td>
+			        <td><input id="scoretotalfour" type="number" value="0" /></td>
+                </tr>
+            </table>
+			<br/>
+			    <input type="button" id="savescores" value="Save Scores" disabled="true" />
+        </div>
+    </form>
+	<input id="cardgame" type="hidden" name="cardGame" value="0" />
+	<input id="team" type="hidden" name="team" value="0" />
+	<!--<input id="game" type="hidden" name="game" value="1" />-->
+	<script src="admin.js"></script>
+</html>
+
