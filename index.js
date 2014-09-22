@@ -16,6 +16,7 @@ $( document ).ready(function(){
 	
 	hideNewGame();
 	hideNewGroup();
+	hideNewPlayer();
 	
     $.ajax({
         type: "GET",
@@ -41,12 +42,48 @@ $( document ).ready(function(){
 
     });
 	
-	///REMOVE CLICKED LI
-    $("#newgroupplayerlist").click(function () {
-		alert("li clicked");
+	///SAVE NEW GROUP
+    $("#savenewgroup").click(function () {
+		alert("savenewgroup clicked");
+		var idPlayer;
+		var playername;
+		var idCardGame = $("#cardgame").attr('value');
+		
+		alert("idCardGame: "+idCardGame);
+		
+		var playergroup = getNextGroup();
+		
+		alert("playerGroup : "+playergroup);
+		
+		var newGroupListLen = 0;
+		var groupName = "";
+		$('#newgroupplayerlist > li').each(function(){
+		  if($(this).text()!= ''){
+			  newGroupListLen++;
+			  playername = $(this).text().split(" ");
+			  groupName += playername[0] + " ";
+		  }
+		  alert(groupName);
+	  	});
+		
+		if(newGroupListLen == 4){
+			$('#newgroupplayerlist > li').each(function(){
+		  	  	idPlayer = $(this).attr('id');
+		  		playername = $(this).text();
+		  		saveNewPlayerGroup(idPlayer, idCardGame, playergroup);
+	  		});
+		}else{
+			alert("List of players is incomplet...");
+		}
 	 });
 	
-	
+ 	///NEW 	PLAYER
+ 	$("#aaddnewplayer").click(function() {
+ 	    //$("#newgamediv").css('display','inline');
+		hideNewGroup();
+ 		showNewPlayer();
+			
+ 	 });
 	///NEW GAME
 	$("#addnewgame").click(function() {
 	    //$("#newgamediv").css('display','inline');
@@ -167,18 +204,27 @@ $( document ).ready(function(){
 
 ///UPDATE NEW GROUP PLAYER LIST
 function updateNewGroupPlayerList(selectedPlayerId, selectedPlayerName){
-	//$('ol li:nth-child(1)').text(selectedPlayerName);
 	var $lis = $('ol li');
-
 	for(var i=0; i < $lis.length; i++)
 	{
 		if ($('ol li:eq(' + i + ')').text() == ''){
 			$('ol li:eq(' + i + ')').text(selectedPlayerName);
+			$('ol li:eq(' + i + ')').attr("id", selectedPlayerId);
 			return;
 		}
 	}
 }
 
+///HIDE NEW PLAYER
+function hideNewPlayer(){
+	$("#newplayerdiv").css('display','none');
+	$("#newplaerlbl").css('display','none');
+	$("#newplayertxt").css('display','none');
+	$("#cancelsavenewplayer").css('display','none');
+	$("#cancelnewplayer").css('display','none');
+	$("#savenewplayer").css('display','none');
+}
+///HIDE SELECT GAME
 function hideSelectGame(){
 	$("#cardgameselectdiv").css('display','none');
 	$("#selectcardgame").css('display','none');
@@ -202,6 +248,17 @@ function hideNewGame(){
 	$('#cancelnewgame').css('display','none');
 	$('#savenewgame').css('display','none');
 }
+
+///SHOW NEW PLAYER
+function showNewPlayer(){
+	$("#newplayerdiv").css('display','inline');
+	$("#newplaerlbl").css('display','inline');
+	$("#newplayertxt").css('display','inline');
+	$("#cancelsavenewplayer").css('display','block');
+	$("#cancelnewplayer").css('display','inline');
+	$("#savenewplayer").css('display','inline');
+}
+
 ///SHOW NEW GAME
 function showNewGame(){
 	$('#newgamediv').css('display','inline');
@@ -401,7 +458,77 @@ function saveScore(idplayer, score, winner){
 	    });
 	}
 	
-
+	function getNextGroup(){
+		var html;
+        $.ajax({
+            type: "GET",
+            url: "http://doihaveit.net/service/CardGame.php?method=getNextPlayerGroup",
+            dataType: "json",
+			async: false,
+            success: function(resp){
+                html = '';
+                var len = resp.length;
+                for (var i = 0; i< len; i++) {
+                    html = resp[i].playerGroup;
+                }
+				alert("playerGroup getNextGroup: "+html);
+            },
+            error: function(xhr, status, error) {
+                alert(xhr.responseText + error + status);
+            }
+        });
+		return html;
+	}
+	
+	function getMaxGroup(){
+		var html;
+        $.ajax({
+            type: "GET",
+            url: "http://doihaveit.net/service/CardGame.php?method=getMaxPlayerGroup",
+            dataType: "json",
+			async: false,
+            success: function(resp){
+                html = '';
+                var len = resp.length;
+                for (var i = 0; i< len; i++) {
+                    html = resp[i].playerGroup;
+                }
+				alert("playerGroup getNextGroup: "+html);
+            },
+            error: function(xhr, status, error) {
+                alert(xhr.responseText + error + status);
+            }
+        });
+		return html;
+	}
+	
+	function saveNewPlayerGroup(idPlayer, idCardGame, playerGroup){
+		alert("playerGroup saveNewPlayerGroup: "+playerGroup);
+		alert("idCardGame saveNewPlayerGroup: "+idCardGame);
+		alert("idPlayer saveNewPlayerGroup: "+idPlayer);
+		var URL = "http://doihaveit.net/service/CardGame.php?method=saveNewPlayerGroup&idPlayer=" +
+			idPlayer +
+			"&idCardGame=" +
+			idCardGame +
+			"&playergroup=" + 
+			playergroup ;
+	idPlayer, idCardGame, playerGroup
+		//alert(URL);
+	
+		$.ajax({
+	    	type: "POST",
+			url: URL,
+			dataType: 'text',
+			async: false,
+			success: function(rsp) {},
+	        error: function(xhr, status, error) {
+	            //var err = eval("(" + xhr.responseText + ")");
+	            alert("ERROR: " + xhr.responseText + error + status);
+	        }
+		});
+					
+		return;
+	}
 
     function getGroupNames() {
         $.ajax({

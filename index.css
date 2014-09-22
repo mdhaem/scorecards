@@ -38,14 +38,13 @@ input, #tally{
 #savescores{
 	width: 80px;
 	border:0;
-<<<<<<< HEAD
 	background-color: #ade6a3;
 }
 h2, h3{
 	font-family: Arial;
 	text-align: center;
 }
-#addnewgame, #addnewplayer, #createnewgroup{
+#addnewgame, #aaddnewplayer, #createnewgroup{
 	font-family: Arial;
 	font-size: x-small;
 	text-align: center;
@@ -59,28 +58,19 @@ label, #newgroupplayerlist{
 	font-family: Arial;
 	font-size: small;
 }
-=======
-	background-color: red;
-}
-h2{
-	font-family: Helvetica;
-	text-align: center;
-}
->>>>>>> c43b01c9bce2b5b7c144a85f6a0103aef5758397
 
 #shanghaiscorecard{
     width: 100%;
     text-align: center;
     font-family: Arial;
     font-size:small;
-<<<<<<< HEAD
     display: none;newgamediv
 }
 #popupDatepicker{
 	width: 80px;
 }
 
-#newgametxt, #newgroupsizetxt{
+#newgametxt, #newgroupsizetxt, #newplayertxt{
 	border: 2px solid #000;
 	background:#ffffa4;
 	text-align:left;
@@ -95,13 +85,6 @@ h2{
 display: none;
 }
 
-=======
-    display: none;
-}
-#selectplayergroup{
-display: none;
-}
->>>>>>> c43b01c9bce2b5b7c144a85f6a0103aef5758397
 .playername{
     font-weight: bold;
 }
